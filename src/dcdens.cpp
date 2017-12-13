@@ -16,25 +16,25 @@ arma::mat expVec(double x, int deg) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix cMat (int k, NumericVector phi) {
-  NumericMatrix prim_c(1,1);
-  NumericMatrix c(1, 1);
-
+arma::mat cMat (int k, NumericVector phi) {
+  arma::mat prim_c(1,1);
+  arma::mat c(1, 1);
+  
   prim_c[1] = 1;
-
+  
   // Fill primitive prim_c matrix
   if (k != 0) {
-    prim_c = NumericMatrix(k+1, k);
-    c = NumericMatrix(k+1, 1);
-
-    for (int i = 0; i < prim_c.nrow(); i++) {
-      if (i + 1 == prim_c.nrow()) { // if last row
+    prim_c = arma::mat(k+1, k);
+    c = arma::mat(k+1, 1);
+    
+    for (int i = 0; i < prim_c.n_rows; i++) {
+      if (i + 1 == prim_c.n_rows) { // if last row
         // write all cos's
-        for (int j = 0; j < prim_c.ncol(); j++) {
+        for (int j = 0; j < prim_c.n_cols; j++) {
           prim_c(i, j) = cos(phi[j]);
         }
       } else { // if not last row
-        for (int j = 0; j < prim_c.ncol(); j++) {
+        for (int j = 0; j < prim_c.n_cols; j++) {
           if (j > i) {
             prim_c(i, j) = 1;
           } else if (j == i) { // if last col
@@ -46,18 +46,18 @@ NumericMatrix cMat (int k, NumericVector phi) {
       }
     }
   }
-
+  
   // Collapse cols by multiplication to create c matrix
-  for (int i = 0; i < prim_c.nrow(); i++) {
+  for (int i = 0; i < prim_c.n_rows; i++) {
     double mult = 1;
-
-    for (int j = 0; j < prim_c.ncol(); j++) {
+    
+    for (int j = 0; j < prim_c.n_cols; j++) {
       mult = mult * prim_c(i, j);
     }
-
+    
     c(i, 0) = mult;
   }
-
+  
   return c;
 }
 
@@ -89,21 +89,24 @@ arma::mat invBMat (int k) {
   return invB;
 }
 
-NumericVector dcdens_ (double x, int k, double mean, double sd, NumericVector phi) {
-
+// [[Rcpp::export]]
+double dcdens_ (double x, int k, double mean, double sd, NumericVector phi) {
   arma::mat invB(k+1, k+1);
-  NumericMatrix c(k+1, 1);
-  NumericMatrix res(1,1);
-
+  arma::mat c(k+1, 1);
+  arma::mat res(k, k);
+  
+  double normdens;
+  
   // invB
   invB = invBMat(k);
-
+  
   // Create c
   c = cMat(k, phi);
-
-  res = Rcpp::wrap(pow(((invB * Rcpp::as<arma::mat>(c)).t() * expVec(x, k)), 2));
-
-  return res * Rcpp::dnorm(NumericVector::create(x), 0.0, 1.0, 0);
+  
+  res = arma::pow((invB * c).t() * expVec(x, k), 2);
+  normdens = dnorm(NumericVector::create(x), 0.0, 1.0, true)[0];
+  
+  return exp(log(res[0]) + normdens);
 }
 
 //' Density function for Davidian curves
@@ -116,7 +119,7 @@ NumericVector dcdensC (NumericVector x, int k, double mean, double sd, NumericVe
   NumericVector res(x.length());
 
   for (int i = 0; i < x.length(); i++) {
-    res[i] = Rcpp::as<double>(dcdens_(x[i], k, mean, sd, phi));
+    res[i] = dcdens_(x[i], k, mean, sd, phi);
   }
 
   return res;
@@ -157,3 +160,8 @@ NumericVector dcGrad_ (double x, int k, NumericMatrix c, NumericVector phi) {
 // NumericVector dcGradC (NumericVector x, int k, NumericMatrix c, NumericVector phi) {
 //   NumericVector res()
 // }
+
+// Test funcs
+// set.seed(2)
+// thetas <- rnorm(5000)
+// res <- lapply(thetas, dcdens_, k=2, mean = 0, sd = 1, phi = c(.1, .1))

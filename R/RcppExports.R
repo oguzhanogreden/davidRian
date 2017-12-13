@@ -13,6 +13,14 @@ invBMat <- function(k) {
     .Call(`_davidRian_invBMat`, k)
 }
 
+dcdens_ <- function(x, k, mean, sd, phi) {
+    .Call(`_davidRian_dcdens_`, x, k, mean, sd, phi)
+}
+
+loopTest <- function(x, k, mean, sd, phi) {
+    .Call(`_davidRian_loopTest`, x, k, mean, sd, phi)
+}
+
 #' Density function for Davidian curves
 #'
 #' Returns the density for a vector of x.

@@ -32,7 +32,7 @@
                 "column" : 15,
                 "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcdens.cpp",
                 "kind" : 6,
-                "line" : 92,
+                "line" : 93,
                 "name" : "dcdens_(double, int, double, double, NumericVector)",
                 "parent_name" : "",
                 "usr" : "c:@F@dcdens_#d#I#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
@@ -41,7 +41,16 @@
                 "column" : 15,
                 "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcdens.cpp",
                 "kind" : 6,
-                "line" : 115,
+                "line" : 113,
+                "name" : "loopTest(double, int, double, double, NumericVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@loopTest#d#I#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+            },
+            {
+                "column" : 15,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcdens.cpp",
+                "kind" : 6,
+                "line" : 132,
                 "name" : "dcdensC(NumericVector, int, double, double, NumericVector)",
                 "parent_name" : "",
                 "usr" : "c:@F@dcdensC#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#I#d#d#S0_#"
@@ -50,13 +59,46 @@
                 "column" : 15,
                 "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcdens.cpp",
                 "kind" : 6,
-                "line" : 126,
+                "line" : 143,
                 "name" : "dcGrad_(double, int, NumericMatrix, NumericVector)",
                 "parent_name" : "",
                 "usr" : "c:@F@dcGrad_#d#I#$@N@Rcpp@C@Matrix>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
             }
         ],
         "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcdens.cpp",
-        "file_last_write" : 1513092277
+        "file_last_write" : 1513166336
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/test.cpp",
+                "kind" : 6,
+                "line" : 8,
+                "name" : "cMat(int, NumericVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@cMat#I#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+            },
+            {
+                "column" : 11,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/test.cpp",
+                "kind" : 6,
+                "line" : 54,
+                "name" : "invBMat(int)",
+                "parent_name" : "",
+                "usr" : "c:@F@invBMat#I#"
+            },
+            {
+                "column" : 15,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/test.cpp",
+                "kind" : 6,
+                "line" : 82,
+                "name" : "loopTest(double, int, double, double, NumericVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@loopTest#d#I#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+            }
+        ],
+        "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/test.cpp",
+        "file_last_write" : 1513174931
     }
 ]
