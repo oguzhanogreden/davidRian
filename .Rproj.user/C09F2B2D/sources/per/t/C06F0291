@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1513078969510.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2003226867",
+    "id" : "C06F0291",
+    "lastKnownWriteTime" : 1513093096,
+    "last_content_update" : 1513093096801,
+    "path" : "~/Documents/PhD/phd-code/davidRiana/R/hello.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "40,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

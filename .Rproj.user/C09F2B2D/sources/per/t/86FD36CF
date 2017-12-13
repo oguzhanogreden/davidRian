@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1513079598859.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3416910226",
+    "id" : "86FD36CF",
+    "lastKnownWriteTime" : 1513092438,
+    "last_content_update" : 1513092438196,
+    "path" : "~/Documents/PhD/phd-code/davidRian/R/optimFuncs.R",
+    "project_path" : "R/optimFuncs.R",
+    "properties" : {
+        "cursorPosition" : "15,14",
+        "notebook_format" : "html_document",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

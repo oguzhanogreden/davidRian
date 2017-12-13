@@ -1,0 +1,40 @@
+# Hello, orld!
+#
+# This is an example function named 'hello'
+# which prints 'Hello, world!'.
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   http://r-pkgs.had.co.nz/
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Build and Reload Package:  'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
+
+hello <- function() {
+  print("Hello, world!")
+}
+
+dcpr <- seq(-3,3, by=.1)
+phi <- 10
+dcp <- dcdensC(dcpr, length(phi), 0, 1, phi)
+# LL <- dc.LL(dcpr, length(phi), 0, 1, phi)
+# dc.LL.grad(dcpr, length(phi), 0, 1, phi)
+# plot(dcpr, dcp)
+
+ofn <- function(phi, thetas, k, mean, sd) {
+  dc.LL(thetas, k, mean, sd, phi)
+}
+
+ogr <- function(phi, thetas, k, mean, sd) {
+  colSums(dc.LL.grad(thetas, k, mean, sd, phi))
+}
+
+#
+set.seed(2)
+thetas <- rnorm(50)
+ogr(c(.1, .1), thetas, 2, 0, 1)
+optim(c(.1, .1), fn = ofn, gr = ogr, thetas = thetas, k = 2, mean = 0, sd = 1, control = list(fnscale = -1, trace = 6), method = "BFGS")
+optim(c(.1, .1), fn = ofn, thetas = thetas, k = 2, mean = 0, sd = 1, control = list(fnscale = -1, trace = 6))
