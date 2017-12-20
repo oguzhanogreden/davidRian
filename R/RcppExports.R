@@ -6,16 +6,20 @@
 #' Returns the density for a vector of x.
 #'
 #' @param x An integer vector
-#' @name dcdens
-dcdensC <- function(x, k, mean, sd, phi) {
-    .Call(`_davidRian_dcdensC`, x, k, mean, sd, phi)
+ddc <- function(x, k, mean, sd, phi) {
+    .Call(`_davidRian_ddc`, x, k, mean, sd, phi)
+}
+
+#' Sampling from a given Davidian curves
+#'
+#' Samples n realizations from the specified Davidian Curve.
+#'
+#' @param x An integer vector
+rdc <- function(n, k, mean, sd, phi) {
+    .Call(`_davidRian_rdc`, n, k, mean, sd, phi)
 }
 
 dcGrad_ <- function(x, k, c, phi) {
     .Call(`_davidRian_dcGrad_`, x, k, c, phi)
-}
-
-rdc <- function(n, k, mean, sd, phi) {
-    .Call(`_davidRian_rdc`, n, k, mean, sd, phi)
 }
 
