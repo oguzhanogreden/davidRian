@@ -16,3 +16,4 @@ dc.LL.grad <- function (thetas, k, mean, sd, phi) {
   densDenom <- sqrt(dcdensC(thetas, k, mean, sd, phi) / dnorm(thetas, mean = mean, sd = sd))
   primGrad/densDenom
 }
+

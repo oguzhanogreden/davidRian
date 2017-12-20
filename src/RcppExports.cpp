@@ -6,71 +6,6 @@
 
 using namespace Rcpp;
 
-// expVec
-arma::mat expVec(double x, int deg);
-RcppExport SEXP _davidRian_expVec(SEXP xSEXP, SEXP degSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type deg(degSEXP);
-    rcpp_result_gen = Rcpp::wrap(expVec(x, deg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cMat
-arma::mat cMat(int k, NumericVector phi);
-RcppExport SEXP _davidRian_cMat(SEXP kSEXP, SEXP phiSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(cMat(k, phi));
-    return rcpp_result_gen;
-END_RCPP
-}
-// invBMat
-arma::mat invBMat(int k);
-RcppExport SEXP _davidRian_invBMat(SEXP kSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(invBMat(k));
-    return rcpp_result_gen;
-END_RCPP
-}
-// dcdens_
-double dcdens_(double x, int k, double mean, double sd, NumericVector phi);
-RcppExport SEXP _davidRian_dcdens_(SEXP xSEXP, SEXP kSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
-    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(dcdens_(x, k, mean, sd, phi));
-    return rcpp_result_gen;
-END_RCPP
-}
-// loopTest
-NumericMatrix loopTest(double x, int k, double mean, double sd, NumericVector phi);
-RcppExport SEXP _davidRian_loopTest(SEXP xSEXP, SEXP kSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
-    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(loopTest(x, k, mean, sd, phi));
-    return rcpp_result_gen;
-END_RCPP
-}
 // dcdensC
 NumericVector dcdensC(NumericVector x, int k, double mean, double sd, NumericVector phi);
 RcppExport SEXP _davidRian_dcdensC(SEXP xSEXP, SEXP kSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
@@ -100,15 +35,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rdc
+NumericVector rdc(int n, int k, double mean, double sd, NumericVector phi);
+RcppExport SEXP _davidRian_rdc(SEXP nSEXP, SEXP kSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
+    rcpp_result_gen = Rcpp::wrap(rdc(n, k, mean, sd, phi));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_davidRian_expVec", (DL_FUNC) &_davidRian_expVec, 2},
-    {"_davidRian_cMat", (DL_FUNC) &_davidRian_cMat, 2},
-    {"_davidRian_invBMat", (DL_FUNC) &_davidRian_invBMat, 1},
-    {"_davidRian_dcdens_", (DL_FUNC) &_davidRian_dcdens_, 5},
-    {"_davidRian_loopTest", (DL_FUNC) &_davidRian_loopTest, 5},
     {"_davidRian_dcdensC", (DL_FUNC) &_davidRian_dcdensC, 5},
     {"_davidRian_dcGrad_", (DL_FUNC) &_davidRian_dcGrad_, 4},
+    {"_davidRian_rdc", (DL_FUNC) &_davidRian_rdc, 5},
     {NULL, NULL, 0}
 };
 

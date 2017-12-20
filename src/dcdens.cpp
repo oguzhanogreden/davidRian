@@ -4,7 +4,6 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
 arma::mat expVec(double x, int deg) {
   arma::mat out(deg+1, 1);
 
@@ -15,7 +14,6 @@ arma::mat expVec(double x, int deg) {
   return out;
 }
 
-// [[Rcpp::export]]
 arma::mat cMat (int k, NumericVector phi) {
   arma::mat prim_c(1,1);
   arma::mat c(1, 1);
@@ -61,7 +59,6 @@ arma::mat cMat (int k, NumericVector phi) {
   return c;
 }
 
-// [[Rcpp::export]]
 arma::mat invBMat (int k) {
   arma::mat B(k+1, k+1);
   arma::mat invB(k+1, k+1);
@@ -89,7 +86,6 @@ arma::mat invBMat (int k) {
   return invB;
 }
 
-// [[Rcpp::export]]
 double dcdens_ (double x, int k, double mean, double sd, NumericVector phi) {
   arma::mat invB(k+1, k+1);
   arma::mat c(k+1, 1);
@@ -104,7 +100,7 @@ double dcdens_ (double x, int k, double mean, double sd, NumericVector phi) {
   c = cMat(k, phi);
   
   res = arma::pow((invB * c).t() * expVec(x, k), 2);
-  normdens = dnorm(NumericVector::create(x), 0.0, 1.0, true)[0];
+  normdens = dnorm(NumericVector::create(x), mean, sd, true)[0];
   
   return exp(log(res[0]) + normdens);
 }
@@ -114,6 +110,7 @@ double dcdens_ (double x, int k, double mean, double sd, NumericVector phi) {
 //' Returns the density for a vector of x.
 //'
 //' @param x An integer vector
+//' @name dcdens
 // [[Rcpp::export]]
 NumericVector dcdensC (NumericVector x, int k, double mean, double sd, NumericVector phi) {
   NumericVector res(x.length());
@@ -161,7 +158,52 @@ NumericVector dcGrad_ (double x, int k, NumericMatrix c, NumericVector phi) {
 //   NumericVector res()
 // }
 
-// Test funcs
-// set.seed(2)
-// thetas <- rnorm(5000)
-// res <- lapply(thetas, dcdens_, k=2, mean = 0, sd = 1, phi = c(.1, .1))
+// [[Rcpp::export]]
+NumericVector rdc (int n, int k, double mean, double sd, NumericVector phi) {
+  NumericVector out(n);
+  NumericVector c(1, 8.55);
+  int accepted = 0;
+  
+  NumericVector y(1);
+  NumericVector u(1);
+  NumericVector ratio(1);
+  
+  while (accepted < n) {
+    y = runif(1, mean-10, mean+10); // proposal density is runif, domain is defined as [mean-10, mean+10].
+    u = runif(1);
+    
+    ratio = dcdensC(y, k, mean, sd, phi) / (c * dunif(y, mean-10, mean+10)); //  ;
+    
+    if (is_true(all(u < ratio))) {
+      out[accepted] = y[0];
+      accepted++;
+    
+    }
+  }
+  
+  return out;
+}
+/*** R
+rdcdens <- function(n, k, mean, sd, phi) {
+  res <- c()
+  c <- 8.55
+  
+  while (length(res) < n) {
+    y <- runif(1, mean-10, mean+10) # proposal density is runif, domain is defined as [mean-10, mean+10].
+    u <- runif(1)
+    
+    if (u < dcdensC(y, k, mean, sd, phi)/(c * dunif(y, mean-10, mean+10))) {
+      res <- c(res, y)
+    }
+  }
+  
+  res
+}
+
+testcpp <- rdc(2000, 1, 0, 5, 1)
+testr <- rdcdens(2000, 1, 0, 5, 1)
+
+*/
+
+
+
