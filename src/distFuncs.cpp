@@ -5,7 +5,8 @@
 
 using namespace Rcpp;
 
-double ddc_ (double x, int k, double mean, double sd, NumericVector phi) {
+double ddc_ (double x, double mean, double sd, NumericVector phi) {
+  int k = phi.length();
   arma::mat invB(k+1, k+1);
   arma::mat c(k+1, 1);
   arma::mat res(k, k);
@@ -24,29 +25,48 @@ double ddc_ (double x, int k, double mean, double sd, NumericVector phi) {
   return exp(log(res[0]) + normdens);
 }
 
-//' Density function for Davidian curves
+//' Density function for univariate Davidian Curves (DC)
 //'
 //' Returns the density for a vector of x.
 //'
-//' @param x An integer vector
+//' @param x A vector of observations.
+//' @param mean Mean of the normal base of DC, see the package vignette.
+//' @param sd SD of the normal base of DC, see the package vignette.
+//' @param phi DC parameters as introduced in Woods & Lin.
+//' 
 // [[Rcpp::export]]
-NumericVector ddc (NumericVector x, int k, double mean, double sd, NumericVector phi) {
+NumericVector ddc (NumericVector x, double mean, double sd, NumericVector phi) {
+  
+  
+  if (phi.length() > 8) {
+    stop("k > 8 is not supported.");
+  }
+  
   NumericVector res(x.length());
 
   for (int i = 0; i < x.length(); i++) {
-    res[i] = ddc_(x[i], k, mean, sd, phi);
+    res[i] = ddc_(x[i], mean, sd, phi);
   }
 
   return res;
 }
 
-//' Sampling from a given Davidian curves
+//' Random samples from a univariate Davidian Curve (DC)
 //'
-//' Samples n realizations from the specified Davidian Curve.
+//' Returns n samples from a univariate DC.
 //'
-//' @param x An integer vector
+//' @param n Number of observations to be sampled.
+//' @param mean Mean of the normal base of DC, see the package vignette.
+//' @param sd SD of the normal base of DC, see the package vignette.
+//' @param phi DC parameters as introduced in Woods & Lin.
+//' 
 // [[Rcpp::export]]
-NumericVector rdc (int n, int k, double mean, double sd, NumericVector phi) {
+NumericVector rdc (int n, double mean, double sd, NumericVector phi) {
+  
+  if (phi.length() > 8) {
+    stop("k > 8 is not supported.");
+  }
+  
   NumericVector out(n);
   NumericVector c(1, 8.55);
   int accepted = 0;
@@ -59,7 +79,7 @@ NumericVector rdc (int n, int k, double mean, double sd, NumericVector phi) {
     y = runif(1, mean-10, mean+10); // proposal density is runif, domain is defined as [mean-10, mean+10].
     u = runif(1);
     
-    ratio = ddc(y, k, mean, sd, phi) / (c * dunif(y, mean-10, mean+10)); //  ;
+    ratio = ddc(y, mean, sd, phi) / (c * dunif(y, mean-10, mean+10)); //  ;
     
     if (is_true(all(u < ratio))) {
       out[accepted] = y[0];
@@ -70,27 +90,4 @@ NumericVector rdc (int n, int k, double mean, double sd, NumericVector phi) {
   
   return out;
 }
-
-/*** R
-rdcdens <- function(n, k, mean, sd, phi) {
-  res <- c()
-  c <- 8.55
-  
-  while (length(res) < n) {
-    y <- runif(1, mean-10, mean+10) # proposal density is runif, domain is defined as [mean-10, mean+10].
-    u <- runif(1)
-    
-    if (u < ddc(y, k, mean, sd, phi)/(c * dunif(y, mean-10, mean+10))) {
-      res <- c(res, y)
-    }
-  }
-  
-  res
-}
-
-testcpp <- rdc(2000, 1, 0, .1, 1)
-testr <- rdcdens(2000, 1, 0, 5, 1)
-*/
-
-
 

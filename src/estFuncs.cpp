@@ -5,12 +5,19 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
-NumericVector dcGrad_ (double x, int k, NumericMatrix c, NumericVector phi) {
+NumericVector dcGrad_ (double x, NumericVector phi) {
+  int k = phi.length();
+  // Eq17 terms
   arma::mat invB(k+1, k+1);
+  arma::mat c;
   arma::mat cDer(k, k+1);
   double tp;
-  arma::mat tmp1(k, 1);
+  arma::mat res(k, 1);
+  
+  //Eq5 term
+  arma::mat pk;
+  
+  c = cMat(k, phi);
 
   for (int i = 0; i < cDer.n_rows; i++) {
     tp = tan(phi[i]);
@@ -30,13 +37,31 @@ NumericVector dcGrad_ (double x, int k, NumericMatrix c, NumericVector phi) {
     }
   }
 
-  invB = invBMat(k).t();
+  invB = invBMat(k);
 
-  tmp1 = (2* cDer * invB * expVec(x, k));
+  res = (2 * cDer * invB.t() * expVec(x, k));
 
-  return Rcpp::wrap(tmp1); // remains to be divided by P_k of (5) in Woods & Lin
+  // res, remains to be divided by P_k of Equation 5 in Woods & Lin, see Equation 17.
+  // P_k is obtained as follows:
+  pk = (invB * c).t() * expVec(x, k);
+
+  return Rcpp::wrap(res / pk[0]); 
 }
 
-// NumericVector dcGradC (NumericVector x, int k, NumericMatrix c, NumericVector phi) {
-  //   NumericVector res()
-  // }
+//' Gradient of the log likelihood of a univariate DC
+//'
+//' Gradient of the loglikelihood of a univariate DC, to be used in estimation.
+//'
+//' @param x A vector of observations.
+//' @param phi DC parameters as introduced in Woods & Lin.
+// [[Rcpp::export]]
+NumericVector dcGrad (NumericVector x,  NumericVector phi) {
+  NumericMatrix res(x.length(), phi.length());
+  NumericMatrix::Row tmprow = res(1, _);
+  
+  for (int i = 0; i < x.length(); i++) {
+    res.row(i) = dcGrad_(x[i], phi);
+  }
+  
+  return res;
+}

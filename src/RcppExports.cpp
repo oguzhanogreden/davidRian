@@ -6,55 +6,63 @@
 
 using namespace Rcpp;
 
+// invBMat
+arma::mat invBMat(int k);
+RcppExport SEXP _davidRian_invBMat(SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(invBMat(k));
+    return rcpp_result_gen;
+END_RCPP
+}
 // ddc
-NumericVector ddc(NumericVector x, int k, double mean, double sd, NumericVector phi);
-RcppExport SEXP _davidRian_ddc(SEXP xSEXP, SEXP kSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
+NumericVector ddc(NumericVector x, double mean, double sd, NumericVector phi);
+RcppExport SEXP _davidRian_ddc(SEXP xSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
     Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
     Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(ddc(x, k, mean, sd, phi));
+    rcpp_result_gen = Rcpp::wrap(ddc(x, mean, sd, phi));
     return rcpp_result_gen;
 END_RCPP
 }
 // rdc
-NumericVector rdc(int n, int k, double mean, double sd, NumericVector phi);
-RcppExport SEXP _davidRian_rdc(SEXP nSEXP, SEXP kSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
+NumericVector rdc(int n, double mean, double sd, NumericVector phi);
+RcppExport SEXP _davidRian_rdc(SEXP nSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
     Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
     Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(rdc(n, k, mean, sd, phi));
+    rcpp_result_gen = Rcpp::wrap(rdc(n, mean, sd, phi));
     return rcpp_result_gen;
 END_RCPP
 }
-// dcGrad_
-NumericVector dcGrad_(double x, int k, NumericMatrix c, NumericVector phi);
-RcppExport SEXP _davidRian_dcGrad_(SEXP xSEXP, SEXP kSEXP, SEXP cSEXP, SEXP phiSEXP) {
+// dcGrad
+NumericVector dcGrad(NumericVector x, NumericVector phi);
+RcppExport SEXP _davidRian_dcGrad(SEXP xSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type c(cSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(dcGrad_(x, k, c, phi));
+    rcpp_result_gen = Rcpp::wrap(dcGrad(x, phi));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_davidRian_ddc", (DL_FUNC) &_davidRian_ddc, 5},
-    {"_davidRian_rdc", (DL_FUNC) &_davidRian_rdc, 5},
-    {"_davidRian_dcGrad_", (DL_FUNC) &_davidRian_dcGrad_, 4},
+    {"_davidRian_invBMat", (DL_FUNC) &_davidRian_invBMat, 1},
+    {"_davidRian_ddc", (DL_FUNC) &_davidRian_ddc, 4},
+    {"_davidRian_rdc", (DL_FUNC) &_davidRian_rdc, 4},
+    {"_davidRian_dcGrad", (DL_FUNC) &_davidRian_dcGrad, 2},
     {NULL, NULL, 0}
 };
 

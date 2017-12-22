@@ -3,60 +3,105 @@
         "definitions" : [
             {
                 "column" : 11,
-                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcUtils.cpp",
                 "kind" : 6,
-                "line" : 7,
+                "line" : 8,
                 "name" : "expVec(double, int)",
                 "parent_name" : "",
                 "usr" : "c:@F@expVec#d#I#"
             },
             {
                 "column" : 11,
-                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcUtils.cpp",
                 "kind" : 6,
-                "line" : 17,
+                "line" : 18,
                 "name" : "cMat(int, NumericVector)",
                 "parent_name" : "",
                 "usr" : "c:@F@cMat#I#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
             },
             {
                 "column" : 11,
-                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcUtils.cpp",
                 "kind" : 6,
-                "line" : 62,
+                "line" : 64,
                 "name" : "invBMat(int)",
                 "parent_name" : "",
                 "usr" : "c:@F@invBMat#I#"
             },
             {
+                "column" : 11,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcUtils.cpp",
+                "kind" : 6,
+                "line" : 101,
+                "name" : "insZ(arma::vec)",
+                "parent_name" : "",
+                "usr" : "c:@F@insZ#$@N@arma@C@Col>#d#"
+            }
+        ],
+        "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcUtils.cpp",
+        "file_last_write" : 1513949688
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/dcUtils.h",
+        "file_last_write" : 1513768759
+    },
+    {
+        "definitions" : [
+            {
                 "column" : 8,
                 "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
                 "kind" : 6,
-                "line" : 89,
-                "name" : "ddc_(double, int, double, double, NumericVector)",
+                "line" : 8,
+                "name" : "ddc_(double, double, double, NumericVector)",
                 "parent_name" : "",
-                "usr" : "c:@F@ddc_#d#I#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+                "usr" : "c:@F@ddc_#d#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
             },
             {
                 "column" : 15,
                 "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
                 "kind" : 6,
-                "line" : 114,
-                "name" : "ddc(NumericVector, int, double, double, NumericVector)",
+                "line" : 38,
+                "name" : "ddc(NumericVector, double, double, NumericVector)",
                 "parent_name" : "",
-                "usr" : "c:@F@ddc#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#I#d#d#S0_#"
+                "usr" : "c:@F@ddc#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#d#d#S0_#"
             },
             {
                 "column" : 15,
                 "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
                 "kind" : 6,
-                "line" : 125,
-                "name" : "rdc(int, int, double, double, NumericVector)",
+                "line" : 64,
+                "name" : "rdc(int, double, double, NumericVector)",
                 "parent_name" : "",
-                "usr" : "c:@F@rdc#I#I#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+                "usr" : "c:@F@rdc#I#d#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
             }
         ],
         "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/distFuncs.cpp",
-        "file_last_write" : 1513767232
+        "file_last_write" : 1513869508
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 15,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/estFuncs.cpp",
+                "kind" : 6,
+                "line" : 8,
+                "name" : "dcGrad_(double, NumericVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@dcGrad_#d#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+            },
+            {
+                "column" : 15,
+                "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/estFuncs.cpp",
+                "kind" : 6,
+                "line" : 58,
+                "name" : "dcGrad(NumericVector, NumericVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@dcGrad#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#"
+            }
+        ],
+        "file" : "/home/oguzhan/Documents/PhD/phd-code/davidRian/src/estFuncs.cpp",
+        "file_last_write" : 1513783773
     }
 ]
