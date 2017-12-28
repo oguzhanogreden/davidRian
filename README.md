@@ -1,2 +1,2 @@
-# dcR
-Davidian curves in R
+# davidRian
+Utility functions for Davidian Curves in R. Under development.
