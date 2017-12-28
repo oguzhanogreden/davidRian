@@ -6,17 +6,6 @@
 
 using namespace Rcpp;
 
-// invBMat
-arma::mat invBMat(int k);
-RcppExport SEXP _davidRian_invBMat(SEXP kSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(invBMat(k));
-    return rcpp_result_gen;
-END_RCPP
-}
 // ddc
 NumericVector ddc(NumericVector x, double mean, double sd, NumericVector phi);
 RcppExport SEXP _davidRian_ddc(SEXP xSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
@@ -59,7 +48,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_davidRian_invBMat", (DL_FUNC) &_davidRian_invBMat, 1},
     {"_davidRian_ddc", (DL_FUNC) &_davidRian_ddc, 4},
     {"_davidRian_rdc", (DL_FUNC) &_davidRian_rdc, 4},
     {"_davidRian_dcGrad", (DL_FUNC) &_davidRian_dcGrad, 2},

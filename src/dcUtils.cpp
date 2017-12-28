@@ -85,7 +85,6 @@ arma::mat fillM (arma::vec vals) {
   return M;
 }
 
-// [[Rcpp::export]]
 arma::mat invBMat (int k) {
     arma::mat B(k+1, k+1);
     arma::mat invB(k+1, k+1);
