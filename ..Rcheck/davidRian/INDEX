@@ -1,6 +1,0 @@
-dcGrad                  Gradient of the log likelihood of a univariate
-                        DC
-ddc                     Density function for univariate Davidian Curves
-                        (DC)
-rdc                     Random samples from a univariate Davidian Curve
-                        (DC)
