@@ -3,3 +3,6 @@
 .Rhistory
 **.Rcheck
 .directory
+.Rproj.user
+**.o
+**.so
