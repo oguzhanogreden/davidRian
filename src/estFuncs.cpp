@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 NumericVector dcGrad_ (double x, NumericVector phi) {
-  int k = phi.length(); 
+  int k = phi.length();
   // Eq17 terms
   arma::mat invB(k+1, k+1);
   arma::mat c;
@@ -18,10 +18,10 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
   arma::mat pk;
   
   c = cMat(k, phi);
-  
+
   for (int i = 0; i < cDer.n_rows; i++) {
     tp = tan(phi[i]);
-    
+
     for (int j = 0; j < cDer.n_cols; j++) {
       if (j == cDer.n_cols) {
         cDer(i,j) = -1 * c[j] * tp;
@@ -32,20 +32,19 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
       } else if (j < i) {
         cDer(i,j) = 0;
       } else {
-        // cDer(i,j) = -999; // to be able to notice if something went wrong.
+        cDer(i,j) = -999;
       }
     }
   }
-  
+
   invB = invBMat(k);
-  
+
   res = (2 * cDer * invB.t() * expVec(x, k));
-  
+
   // res, remains to be divided by P_k of Equation 5 in Woods & Lin, see Equation 17.
   // P_k is obtained as follows:
   pk = (invB * c).t() * expVec(x, k);
-  
-  // The returned value needs to be multiplied by N(theta_q) from E step. mirt provides the N(), hence it cannot done here...
+
   return Rcpp::wrap(res / pk[0]); 
 }
 
