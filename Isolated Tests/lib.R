@@ -56,7 +56,6 @@ imitate_bm_e <- function(quadpts, N) {
 }
 
 # From mirt:
-
 interpolateWoods <- function (point, std_point, nq1, nq2, delta) {
   term1 <- (point - std_point)/delta
   term2 <- nq2 - nq1
@@ -81,7 +80,7 @@ standardizeQuadrature <- function (qp, std_qp, nq) {
   
   res <- matrix(NA, nrow = length(qp), ncol = 2)
   res[, 1] <- qp
-  delta <- std_qp[2] - std_qp[1] # is the distance between any two q or, equivalently, between any two q*
+  delta <- qp[2] - qp[1] # is the distance between any two q or, equivalently, between any two q*
   for (i in 1:length(qp)) {
     if (qp[i] <= min_stdqp) {
       res[i,2] <- extrapolateWoods(qp[i], min_stdqp, nq[1], nq[2], delta, "left")
