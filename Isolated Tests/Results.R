@@ -103,10 +103,9 @@ obs_m <- sum(gTheta[[1]]) / sum(rr)
 obs_sd <- sqrt(sum(rr * (gTheta[[1]] - obs_m)^2) / sum(rr))
 gTheta_std <- (gTheta[[1]] - obs_m) / obs_sd
 std_qp <- standardizeQuadrature(gTheta[[1]], gTheta_std, rr)
-std_qp[,2] <- std_qp[,2] / sum(std_qp[,2]) * sum(rr)
 
 plot4ii_e <- ggplot(data.frame(X = std_qp[,1], Y = std_qp[,2]), aes(x=X, y=Y)) + geom_line() +
-  ggtitle("E-table")
+  ggtitle("E-table") + theme_minimal()
 
 plot4ii <- apply(sim_pars, 1, function(x) {
   match_conds <- (res4ii[,1] == x)
