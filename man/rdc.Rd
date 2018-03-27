@@ -4,14 +4,10 @@
 \alias{rdc}
 \title{Random samples from a univariate Davidian Curve (DC)}
 \usage{
-rdc(n, mean, sd, phi)
+rdc(n, phi)
 }
 \arguments{
 \item{n}{Number of observations to be sampled.}
-
-\item{mean}{Mean of the normal base of DC, see the package vignette.}
-
-\item{sd}{SD of the normal base of DC, see the package vignette.}
 
 \item{phi}{DC parameters as introduced in Woods & Lin.}
 }

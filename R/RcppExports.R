@@ -6,12 +6,10 @@
 #' Returns the density for a vector of x.
 #'
 #' @param x A vector of observations.
-#' @param mean Mean of the normal base of DC, see the package vignette.
-#' @param sd SD of the normal base of DC, see the package vignette.
 #' @param phi DC parameters as introduced in Woods & Lin.
 #' 
-ddc <- function(x, mean, sd, phi) {
-    .Call(`_davidRian_ddc`, x, mean, sd, phi)
+ddc <- function(x, phi) {
+    .Call(`_davidRian_ddc`, x, phi)
 }
 
 #' Random samples from a univariate Davidian Curve (DC)
@@ -19,12 +17,10 @@ ddc <- function(x, mean, sd, phi) {
 #' Returns n samples from a univariate DC.
 #'
 #' @param n Number of observations to be sampled.
-#' @param mean Mean of the normal base of DC, see the package vignette.
-#' @param sd SD of the normal base of DC, see the package vignette.
 #' @param phi DC parameters as introduced in Woods & Lin.
 #' 
-rdc <- function(n, mean, sd, phi) {
-    .Call(`_davidRian_rdc`, n, mean, sd, phi)
+rdc <- function(n, phi) {
+    .Call(`_davidRian_rdc`, n, phi)
 }
 
 #' Gradient of the log likelihood of a univariate DC

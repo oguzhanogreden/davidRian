@@ -5,7 +5,7 @@
 
 using namespace Rcpp;
 
-double ddc_ (double x, double mean, double sd, NumericVector phi) {
+double ddc_ (double x, NumericVector phi) {
   int k = phi.length();
   arma::mat invB(k+1, k+1);
   arma::mat c(k+1, 1);
@@ -20,7 +20,7 @@ double ddc_ (double x, double mean, double sd, NumericVector phi) {
   c = cMat(k, phi);
   
   res = arma::pow((invB * c).t() * expVec(x, k), 2);
-  normdens = dnorm(NumericVector::create(x), mean, sd, true)[0];
+  normdens = dnorm(NumericVector::create(x), 0, 1, true)[0];
   
   return exp(log(res[0]) + normdens);
 }
@@ -30,22 +30,20 @@ double ddc_ (double x, double mean, double sd, NumericVector phi) {
 //' Returns the density for a vector of x.
 //'
 //' @param x A vector of observations.
-//' @param mean Mean of the normal base of DC, see the package vignette.
-//' @param sd SD of the normal base of DC, see the package vignette.
 //' @param phi DC parameters as introduced in Woods & Lin.
 //' 
 // [[Rcpp::export]]
-NumericVector ddc (NumericVector x, double mean, double sd, NumericVector phi) {
+NumericVector ddc (NumericVector x, NumericVector phi) {
   
   
-  if (phi.length() > 8) {
-    stop("k > 8 is not supported.");
+  if (phi.length() > 10) {
+    stop("k > 10 is not supported.");
   }
   
   NumericVector res(x.length());
 
   for (int i = 0; i < x.length(); i++) {
-    res[i] = ddc_(x[i], mean, sd, phi);
+    res[i] = ddc_(x[i], phi);
   }
 
   return res;
@@ -56,12 +54,10 @@ NumericVector ddc (NumericVector x, double mean, double sd, NumericVector phi) {
 //' Returns n samples from a univariate DC.
 //'
 //' @param n Number of observations to be sampled.
-//' @param mean Mean of the normal base of DC, see the package vignette.
-//' @param sd SD of the normal base of DC, see the package vignette.
 //' @param phi DC parameters as introduced in Woods & Lin.
 //' 
 // [[Rcpp::export]]
-NumericVector rdc (int n, double mean, double sd, NumericVector phi) {
+NumericVector rdc (int n, NumericVector phi) {
   
   if (phi.length() > 8) {
     stop("k > 8 is not supported.");
@@ -76,10 +72,10 @@ NumericVector rdc (int n, double mean, double sd, NumericVector phi) {
   NumericVector ratio(1);
   
   while (accepted < n) {
-    y = runif(1, mean-10, mean+10); // proposal density is runif, domain is defined as [mean-10, mean+10].
+    y = runif(1, -10.0, 10.0); // proposal density is runif, domain is defined as [mean-10, mean+10].
     u = runif(1);
     
-    ratio = ddc(y, mean, sd, phi) / (c * dunif(y, mean-10, mean+10)); //  ;
+    ratio = ddc(y, phi) / (c * dunif(y, -10.0, +10.0)); //  ;
     
     if (is_true(all(u < ratio))) {
       out[accepted] = y[0];

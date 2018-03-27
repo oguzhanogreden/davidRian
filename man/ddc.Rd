@@ -4,14 +4,10 @@
 \alias{ddc}
 \title{Density function for univariate Davidian Curves (DC)}
 \usage{
-ddc(x, mean, sd, phi)
+ddc(x, phi)
 }
 \arguments{
 \item{x}{A vector of observations.}
-
-\item{mean}{Mean of the normal base of DC, see the package vignette.}
-
-\item{sd}{SD of the normal base of DC, see the package vignette.}
 
 \item{phi}{DC parameters as introduced in Woods & Lin.}
 }

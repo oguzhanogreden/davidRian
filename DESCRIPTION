@@ -1,12 +1,14 @@
 Package: davidRian
-Type: Package
-Title: What the package does (short line)
-Version: 0.1.0
-Date: 2017-12-12
-Author: Oguzhan Ogreden
-Maintainer: Oguzhan Ogreden <oguzhan@oguzhanogreden.com>
-Description: Utility functions for working with univariate Davidian Curves.
-License: GPL
+Version: 0.9.0
+Date: 2018-03-28
+Title: Utility Functions for Davidian Curves
+Author: Oğuzhan Öğreden
+Maintainer: Oğuzhan Öğreden <oguzhan@oguzhanogreden.com>
+Description: davidRian provides the density function, gradient and a sampler for Davidian curves.
+License: GPL-3
+URL: https://github.com/oguzhanogreden/davidRian
+BugReports: https://github.com/oguzhanogreden/davidRian/issues
 Imports: Rcpp (>= 0.12.14)
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.0.1
+Encoding: UTF-8
