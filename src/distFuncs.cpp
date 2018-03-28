@@ -67,7 +67,7 @@ NumericVector rdc (int n, NumericVector phi) {
   }
   
   NumericVector out(n);
-  NumericVector c(1, 8.55);
+  NumericVector c(1, 8.55); // this may not be optimal but some local tests held up.
   int accepted = 0;
   
   NumericVector y(1);
