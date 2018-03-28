@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{ddc}
 \alias{ddc}
-\title{Density function for univariate Davidian Curves (DC)}
+\title{Density function for univariate Davidian curves}
 \usage{
 ddc(x, phi)
 }
