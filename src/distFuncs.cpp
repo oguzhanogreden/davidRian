@@ -25,7 +25,7 @@ double ddc_ (double x, NumericVector phi) {
   return exp(log(res[0]) + normdens);
 }
 
-//' Density function for univariate Davidian Curves (DC)
+//' Density function for univariate Davidian curves
 //'
 //' Returns the density for a vector of x.
 //'
@@ -34,7 +34,6 @@ double ddc_ (double x, NumericVector phi) {
 //' 
 // [[Rcpp::export]]
 NumericVector ddc (NumericVector x, NumericVector phi) {
-  
   
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
@@ -53,7 +52,7 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
   return res;
 }
 
-//' Random samples from a univariate Davidian Curve (DC)
+//' Random samples from univariate Davidian curves
 //'
 //' Returns n samples from a univariate DC.
 //'

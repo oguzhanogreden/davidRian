@@ -12,7 +12,7 @@ ddc <- function(x, phi) {
     .Call(`_davidRian_ddc`, x, phi)
 }
 
-#' Random samples from a univariate Davidian Curve (DC)
+#' Random samples from a univariate Davidian curve
 #'
 #' Returns n samples from a univariate DC.
 #'
@@ -23,12 +23,12 @@ rdc <- function(n, phi) {
     .Call(`_davidRian_rdc`, n, phi)
 }
 
-#' Gradient of the log likelihood of a univariate DC
+#' Gradient of the log-likelihood of a univariate Davidian curve
 #'
-#' Gradient of the loglikelihood of a univariate DC, to be used in estimation.
+#' Provides the gradient for use in estimation.
 #'
 #' @param x A vector of observations.
-#' @param phi DC parameters as introduced in Woods & Lin.
+#' @param phi Davidian curve parameters. length(phi) < 11.
 dcGrad <- function(x, phi) {
     .Call(`_davidRian_dcGrad`, x, phi)
 }

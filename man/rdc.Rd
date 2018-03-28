@@ -2,14 +2,14 @@
 % Please edit documentation in R/RcppExports.R
 \name{rdc}
 \alias{rdc}
-\title{Random samples from a univariate Davidian Curve (DC)}
+\title{Random samples from a univariate Davidian curve}
 \usage{
 rdc(n, phi)
 }
 \arguments{
 \item{n}{Number of observations to be sampled.}
 
-\item{phi}{DC parameters as introduced in Woods & Lin.}
+\item{phi}{Davidian curve parameters. length(phi) < 11.}
 }
 \description{
 Returns n samples from a univariate DC.

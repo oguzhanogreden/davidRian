@@ -2,15 +2,15 @@
 % Please edit documentation in R/RcppExports.R
 \name{dcGrad}
 \alias{dcGrad}
-\title{Gradient of the log likelihood of a univariate DC}
+\title{Gradient of the log-likelihood of a univariate Davidian curve}
 \usage{
 dcGrad(x, phi)
 }
 \arguments{
 \item{x}{A vector of observations.}
 
-\item{phi}{DC parameters as introduced in Woods & Lin.}
+\item{phi}{Davidian curve parameters. length(phi) < 11.}
 }
 \description{
-Gradient of the loglikelihood of a univariate DC, to be used in estimation.
+Provides the gradient for use in estimation.
 }

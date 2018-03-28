@@ -7,9 +7,9 @@
 ddc(x, phi)
 }
 \arguments{
-\item{x}{A vector of observations.}
+\item{x}{vector of quantiles.}
 
-\item{phi}{DC parameters as introduced in Woods & Lin.}
+\item{phi}{Davidian curve parameters. length(phi) < 11.}
 }
 \description{
 Returns the density for a vector of x.

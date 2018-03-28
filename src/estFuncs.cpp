@@ -47,12 +47,12 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
   return Rcpp::wrap(res / pk[0]); 
 }
 
-//' Gradient of the log likelihood of a univariate DC
+//' Gradient of the log-likelihood of univariate Davidian curves
 //'
-//' Gradient of the loglikelihood of a univariate DC, to be used in estimation.
+//' Provides the gradient for use in estimation.
 //'
 //' @param x A vector of observations.
-//' @param phi DC parameters as introduced in Woods & Lin.
+//' @param phi Davidian curve parameters. length(phi) < 11.
 // [[Rcpp::export]]
 NumericVector dcGrad (NumericVector x,  NumericVector phi) {
   NumericMatrix res(x.length(), phi.length());

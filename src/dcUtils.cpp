@@ -6,9 +6,9 @@
 // using namespace Rcpp;
 
 arma::mat expVec(double x, int deg) {
-  // This is the third term in the polynomial.
-  // Simply a column vector containing the exponential serie
+  // Create a column vector of the exponential series:
   // 1 + theta + theta^2 + ... + theta_k.
+  
   arma::mat out(deg+1, 1);
   
   for (int i = 0; i < deg+1; i++) {
@@ -19,7 +19,9 @@ arma::mat expVec(double x, int deg) {
 }
 
 arma::mat cMat (int k, NumericVector phi) {
-  // c is one of the central terms in Equation (9) of Woods & Lin (2009).
+  // Create c matrix.
+  
+  // c is a term in Equation (9) of Woods & Lin (2009).
   // This function creates the c matrix given a degree of k and a vector phi of
   // length k, containing the parameters of the polynomial P_k^2(\theta).
   arma::mat prim_c(1,1);
@@ -32,14 +34,14 @@ arma::mat cMat (int k, NumericVector phi) {
     prim_c = arma::mat(k+1, k);
     c = arma::mat(k+1, 1);
     
-    for (int i = 0; i < prim_c.n_rows; i++) {
+    for (unsigned int i = 0; i < prim_c.n_rows; i++) {
       if (i + 1 == prim_c.n_rows) { // if last row
         // write all cos's
-        for (int j = 0; j < prim_c.n_cols; j++) {
+        for (unsigned int j = 0; j < prim_c.n_cols; j++) {
           prim_c(i, j) = cos(phi[j]);
         }
       } else { // if not last row
-        for (int j = 0; j < prim_c.n_cols; j++) {
+        for (unsigned int j = 0; j < prim_c.n_cols; j++) {
           if (j > i) {
             prim_c(i, j) = 1;
           } else if (j == i) { // if last col
@@ -53,10 +55,10 @@ arma::mat cMat (int k, NumericVector phi) {
   }
   
   // Collapse cols by multiplication to create c matrix
-  for (int i = 0; i < prim_c.n_rows; i++) {
+  for (unsigned int i = 0; i < prim_c.n_rows; i++) {
     double mult = 1;
     
-    for (int j = 0; j < prim_c.n_cols; j++) {
+    for (unsigned int j = 0; j < prim_c.n_cols; j++) {
       mult = mult * prim_c(i, j);
     }
     
@@ -69,7 +71,7 @@ arma::mat cMat (int k, NumericVector phi) {
 arma::vec insZ (arma::vec vals) {
   arma::vec tmp(vals.n_elem * 2, arma::fill::zeros);
   
-  for (int i = 0; i < vals.n_elem; i++) {
+  for (unsigned int i = 0; i < vals.n_elem; i++) {
     tmp[i*2] = vals(i);
   }
   
@@ -78,8 +80,7 @@ arma::vec insZ (arma::vec vals) {
 
 arma::mat fillM (arma::vec vals) {
   // Function to fill M given the vals.
-  // I could not figure out a simple way, hence
-  // this is done using an algorithm.
+  
   int k = vals.n_elem;
   arma::mat M(k, k, arma::fill::zeros);
   arma::rowvec valsZ;
@@ -95,8 +96,10 @@ arma::mat fillM (arma::vec vals) {
 }
 
 arma::mat invBMat (int k) {
-  // Following the notation in Woods & Lin (2009)...
-  // Inverse of B is a frequently used term. B itself is defined such that
+  // Obtain B matrix and find the inverse.
+  
+  // Following the notation in Woods & Lin (2009):
+  // Inverse of B is a frequently used term. B itself is defined,
   // B^T B = M.
   // M is filled manually as it is given in Equation (9),
   // fillM() is defined above for this purpose. Then, B is obtained
@@ -105,9 +108,8 @@ arma::mat invBMat (int k) {
   arma::mat invB(k+1, k+1);
   arma::mat M(k+1, k+1);
   arma::vec vals(k+1);
-  int MSize = (k+1) * (k+1);
   
-  // M matrix values
+  // M matrix values, approximate.
   if (k == 1) {
     vals = arma::vec({1, 1});
   } else if (k == 2) {
