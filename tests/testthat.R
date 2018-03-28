@@ -1,4 +1,4 @@
 library(testthat)
-library(davidRian)
+library(dcurver)
 
-test_check("davidRian")
+test_check("dcurver")

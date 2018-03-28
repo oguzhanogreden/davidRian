@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // ddc
 NumericVector ddc(NumericVector x, NumericVector phi);
-RcppExport SEXP _davidRian_ddc(SEXP xSEXP, SEXP phiSEXP) {
+RcppExport SEXP _dcurver_ddc(SEXP xSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // rdc
 NumericVector rdc(int n, NumericVector phi);
-RcppExport SEXP _davidRian_rdc(SEXP nSEXP, SEXP phiSEXP) {
+RcppExport SEXP _dcurver_rdc(SEXP nSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,7 +32,7 @@ END_RCPP
 }
 // dc_grad
 NumericVector dc_grad(NumericVector x, NumericVector phi);
-RcppExport SEXP _davidRian_dc_grad(SEXP xSEXP, SEXP phiSEXP) {
+RcppExport SEXP _dcurver_dc_grad(SEXP xSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,13 +44,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_davidRian_ddc", (DL_FUNC) &_davidRian_ddc, 2},
-    {"_davidRian_rdc", (DL_FUNC) &_davidRian_rdc, 2},
-    {"_davidRian_dc_grad", (DL_FUNC) &_davidRian_dc_grad, 2},
+    {"_dcurver_ddc", (DL_FUNC) &_dcurver_ddc, 2},
+    {"_dcurver_rdc", (DL_FUNC) &_dcurver_rdc, 2},
+    {"_dcurver_dc_grad", (DL_FUNC) &_dcurver_dc_grad, 2},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_davidRian(DllInfo *dll) {
+RcppExport void R_init_dcurver(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

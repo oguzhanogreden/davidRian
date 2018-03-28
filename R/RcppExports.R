@@ -9,7 +9,7 @@
 #' @param phi Davidian curve parameters. length(phi) < 11.
 #' 
 ddc <- function(x, phi) {
-    .Call(`_davidRian_ddc`, x, phi)
+    .Call(`_dcurver_ddc`, x, phi)
 }
 
 #' Random samples from univariate Davidian curves
@@ -20,7 +20,7 @@ ddc <- function(x, phi) {
 #' @param phi Davidian curve parameters. length(phi) < 11.
 #' 
 rdc <- function(n, phi) {
-    .Call(`_davidRian_rdc`, n, phi)
+    .Call(`_dcurver_rdc`, n, phi)
 }
 
 #' Gradient of the log-likelihood of univariate Davidian curves
@@ -30,6 +30,6 @@ rdc <- function(n, phi) {
 #' @param x A vector of observations.
 #' @param phi Davidian curve parameters. length(phi) < 11.
 dc_grad <- function(x, phi) {
-    .Call(`_davidRian_dc_grad`, x, phi)
+    .Call(`_dcurver_dc_grad`, x, phi)
 }
 

@@ -4,7 +4,7 @@ Date: 2018-03-28
 Title: Utility Functions for Davidian Curves in R
 Author: Oğuzhan Öğreden
 Maintainer: Oğuzhan Öğreden <oguzhan@oguzhanogreden.com>
-Description: dcurver provides the density function, gradient and a random generator for Davidian curves.
+Description: The density function, the gradient of the loglikelihood and a random generator for Davidian curves.
 License: GPL-3
 URL: https://github.com/oguzhanogreden/dcurver
 BugReports: https://github.com/oguzhanogreden/dcurver/issues
