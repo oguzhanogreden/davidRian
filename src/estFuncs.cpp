@@ -19,10 +19,10 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
   
   c = cMat(k, phi);
   
-  for (int i = 0; i < cDer.n_rows; i++) {
+  for (unsigned int i = 0; i < cDer.n_rows; i++) {
     tp = tan(phi[i]);
     
-    for (int j = 0; j < cDer.n_cols; j++) {
+    for (unsigned int j = 0; j < cDer.n_cols; j++) {
       if (j == cDer.n_cols) {
         cDer(i,j) = -1 * c[j] * tp;
       } else if (j > i) {
@@ -31,8 +31,6 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
         cDer(i,j) = c[j] * (1 / tp);
       } else if (j < i) {
         cDer(i,j) = 0;
-      } else {
-        // cDer(i,j) = -999; // to be able to notice if something went wrong.
       }
     }
   }
