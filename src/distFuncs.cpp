@@ -54,7 +54,7 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
 
 //' Random samples from univariate Davidian curves
 //'
-//' Returns n samples from a univariate DC.
+//' Returns n samples from a univariate Davidian curve.
 //'
 //' @param n Number of observations to be sampled.
 //' @param phi Davidian curve parameters. length(phi) < 11.
@@ -75,7 +75,7 @@ NumericVector rdc (int n, NumericVector phi) {
   NumericVector ratio(1);
   
   while (accepted < n) {
-    y = runif(1, -10.0, 10.0); // proposal density is runif, domain is defined as [mean-10, mean+10].
+    y = runif(1, -10.0, 10.0); // proposal density is runif, domain is defined as [-10, +10].
     u = runif(1);
     
     ratio = ddc(y, phi) / (c * dunif(y, -10.0, +10.0)); //  ;

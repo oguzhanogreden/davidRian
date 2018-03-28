@@ -54,7 +54,7 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
 //' @param x A vector of observations.
 //' @param phi Davidian curve parameters. length(phi) < 11.
 // [[Rcpp::export]]
-NumericVector dcGrad (NumericVector x,  NumericVector phi) {
+NumericVector dc_grad (NumericVector x,  NumericVector phi) {
   NumericMatrix res(x.length(), phi.length());
   NumericMatrix::Row tmprow = res(1, _);
   

@@ -30,15 +30,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// dcGrad
-NumericVector dcGrad(NumericVector x, NumericVector phi);
-RcppExport SEXP _davidRian_dcGrad(SEXP xSEXP, SEXP phiSEXP) {
+// dc_grad
+NumericVector dc_grad(NumericVector x, NumericVector phi);
+RcppExport SEXP _davidRian_dc_grad(SEXP xSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(dcGrad(x, phi));
+    rcpp_result_gen = Rcpp::wrap(dc_grad(x, phi));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -46,7 +46,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_davidRian_ddc", (DL_FUNC) &_davidRian_ddc, 2},
     {"_davidRian_rdc", (DL_FUNC) &_davidRian_rdc, 2},
-    {"_davidRian_dcGrad", (DL_FUNC) &_davidRian_dcGrad, 2},
+    {"_davidRian_dc_grad", (DL_FUNC) &_davidRian_dc_grad, 2},
     {NULL, NULL, 0}
 };
 
