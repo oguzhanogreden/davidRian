@@ -5,8 +5,8 @@
 #'
 #' Returns the density for a vector of x.
 #'
-#' @param x A vector of observations.
-#' @param phi DC parameters as introduced in Woods & Lin.
+#' @param x vector of quantiles.
+#' @param phi Davidian curve parameters. length(phi) < 11.
 #' 
 ddc <- function(x, phi) {
     .Call(`_davidRian_ddc`, x, phi)
@@ -17,7 +17,7 @@ ddc <- function(x, phi) {
 #' Returns n samples from a univariate DC.
 #'
 #' @param n Number of observations to be sampled.
-#' @param phi DC parameters as introduced in Woods & Lin.
+#' @param phi Davidian curve parameters. length(phi) < 11.
 #' 
 rdc <- function(n, phi) {
     .Call(`_davidRian_rdc`, n, phi)

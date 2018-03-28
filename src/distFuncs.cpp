@@ -29,21 +29,25 @@ double ddc_ (double x, NumericVector phi) {
 //'
 //' Returns the density for a vector of x.
 //'
-//' @param x A vector of observations.
-//' @param phi DC parameters as introduced in Woods & Lin.
+//' @param x vector of quantiles.
+//' @param phi Davidian curve parameters. length(phi) < 11.
 //' 
 // [[Rcpp::export]]
 NumericVector ddc (NumericVector x, NumericVector phi) {
   
   
   if (phi.length() > 10) {
-    stop("k > 10 is not supported.");
+    stop("length(phi) > 10 is not supported.");
   }
   
   NumericVector res(x.length());
 
   for (int i = 0; i < x.length(); i++) {
-    res[i] = ddc_(x[i], phi);
+    if (Rcpp::traits::is_infinite<REALSXP>(x[i])) {
+      res[i] = 0;
+    } else {
+      res[i] = ddc_(x[i], phi); 
+    }
   }
 
   return res;
@@ -54,13 +58,13 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
 //' Returns n samples from a univariate DC.
 //'
 //' @param n Number of observations to be sampled.
-//' @param phi DC parameters as introduced in Woods & Lin.
+//' @param phi Davidian curve parameters. length(phi) < 11.
 //' 
 // [[Rcpp::export]]
 NumericVector rdc (int n, NumericVector phi) {
   
-  if (phi.length() > 8) {
-    stop("k > 8 is not supported.");
+  if (phi.length() > 10) {
+    stop("length(phi) > 10 is not supported.");
   }
   
   NumericVector out(n);
@@ -80,7 +84,6 @@ NumericVector rdc (int n, NumericVector phi) {
     if (is_true(all(u < ratio))) {
       out[accepted] = y[0];
       accepted++;
-    
     }
   }
   
