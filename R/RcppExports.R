@@ -6,8 +6,15 @@
 #' Returns the density for a vector of x.
 #'
 #' @param x vector of quantiles.
-#' @param phi Davidian curve parameters. length(phi) < 11.
+#' @param phi Davidian curve parameters.
+#' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
 #' 
+#' @examples
+#' curve(ddc(x, 1.570789), -6, 6) # Approximately normal.
+#' 
+#' phi <- c(77.32, 78.51, 76.33, 77.16)
+#' curve(ddc(x, phi), -6, 6) # A bimodal density.
+#' integrate(ddc, phi = phi, lower = -Inf, upper = Inf) # Integrates to 1.
 ddc <- function(x, phi) {
     .Call(`_dcurver_ddc`, x, phi)
 }
@@ -17,7 +24,19 @@ ddc <- function(x, phi) {
 #' Returns n samples from a univariate Davidian curve.
 #'
 #' @param n Number of observations to be sampled.
-#' @param phi Davidian curve parameters. length(phi) < 11.
+#' @param phi Davidian curve parameters.
+#' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
+#' 
+#' @examples
+#' # Sample from the standard normal Davidian curve:
+#' hist(rdc(1000, 1.570789), xlim = c(-6, 6), ylim = c(0, 0.5), freq = FALSE, breaks = 20)
+#' curve(dnorm(x), -6, 6, col = "blue", lwd = 1, add = TRUE)
+#' curve(ddc(x, 1.570789), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
+#'
+#' # Sample from a bimodal density:
+#' phi <- c(77.32, 78.51, 76.33, 77.16)
+#' hist(rdc(1000, phi), xlim = c(-6, 6), ylim = c(0, 0.4), freq = FALSE, breaks = "fd")
+#' curve(ddc(x, phi), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
 #' 
 rdc <- function(n, phi) {
     .Call(`_dcurver_rdc`, n, phi)
@@ -28,7 +47,29 @@ rdc <- function(n, phi) {
 #' Provides the gradient for use in estimation.
 #'
 #' @param x A vector of observations.
-#' @param phi Davidian curve parameters. length(phi) < 11.
+#' @param phi phi Davidian curve parameters.
+#' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
+#' 
+#' @examples
+#' # The loglikelihood of a univariate Davidian curve is given by,
+#' dc_LL <- function(phi, dat) {
+#'   sum(log(ddc(dat, phi)))
+#' }
+#' 
+#' # dc_grad can be used for obtaining the gradient of this loglikelihood as follows:
+#' dc_LL_GR <- function(phi, dat) {
+#'   colSums(dc_grad(dat, phi))
+#' }
+#'
+#' # This can be verified by numerical approximation.
+#' # For instance, using numDeriv package:
+#' \dontrun{
+#' phi <- c(-10, 0, 10)
+#' d <- runif(10, -5, 5)
+#' dc_LL_GR(phi, d)
+#' numDeriv::grad(dc_LL, x = phi, dat = d)
+#' }
+#' 
 dc_grad <- function(x, phi) {
     .Call(`_dcurver_dc_grad`, x, phi)
 }

@@ -9,8 +9,16 @@ ddc(x, phi)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{phi}{Davidian curve parameters. length(phi) < 11.}
+\item{phi}{Davidian curve parameters.
+A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.}
 }
 \description{
 Returns the density for a vector of x.
+}
+\examples{
+curve(ddc(x, 1.570789), -6, 6) # Approximately normal.
+
+phi <- c(77.32, 78.51, 76.33, 77.16)
+curve(ddc(x, phi), -6, 6) # A bimodal density.
+integrate(ddc, phi = phi, lower = -Inf, upper = Inf) # Integrates to 1.
 }

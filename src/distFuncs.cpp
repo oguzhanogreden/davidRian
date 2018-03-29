@@ -30,13 +30,24 @@ double ddc_ (double x, NumericVector phi) {
 //' Returns the density for a vector of x.
 //'
 //' @param x vector of quantiles.
-//' @param phi Davidian curve parameters. length(phi) < 11.
+//' @param phi Davidian curve parameters.
+//' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
 //' 
+//' @examples
+//' curve(ddc(x, 1.570789), -6, 6) # Approximately normal.
+//' 
+//' phi <- c(77.32, 78.51, 76.33, 77.16)
+//' curve(ddc(x, phi), -6, 6) # A bimodal density.
+//' integrate(ddc, phi = phi, lower = -Inf, upper = Inf) # Integrates to 1.
 // [[Rcpp::export]]
 NumericVector ddc (NumericVector x, NumericVector phi) {
   
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
+  }
+  
+  if (is_true(any((phi <= -90) | (phi > 90)))) {
+    stop("90 < phi <= 90 should hold for all phi.");
   }
   
   NumericVector res(x.length());
@@ -57,7 +68,19 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
 //' Returns n samples from a univariate Davidian curve.
 //'
 //' @param n Number of observations to be sampled.
-//' @param phi Davidian curve parameters. length(phi) < 11.
+//' @param phi Davidian curve parameters.
+//' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
+//' 
+//' @examples
+//' # Sample from the standard normal Davidian curve:
+//' hist(rdc(1000, 1.570789), xlim = c(-6, 6), ylim = c(0, 0.5), freq = FALSE, breaks = 20)
+//' curve(dnorm(x), -6, 6, col = "blue", lwd = 1, add = TRUE)
+//' curve(ddc(x, 1.570789), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
+//'
+//' # Sample from a bimodal density:
+//' phi <- c(77.32, 78.51, 76.33, 77.16)
+//' hist(rdc(1000, phi), xlim = c(-6, 6), ylim = c(0, 0.4), freq = FALSE, breaks = "fd")
+//' curve(ddc(x, phi), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
 //' 
 // [[Rcpp::export]]
 NumericVector rdc (int n, NumericVector phi) {
@@ -65,6 +88,11 @@ NumericVector rdc (int n, NumericVector phi) {
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
   }
+  
+  if (is_true(any((phi <= -90) | (phi > 90)))) {
+    stop("90 < phi <= 90 should hold for all phi.");
+  }
+  
   
   NumericVector out(n);
   NumericVector c(1, 8.55); // this may not be optimal but some local tests held up.

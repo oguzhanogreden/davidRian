@@ -9,8 +9,30 @@ dc_grad(x, phi)
 \arguments{
 \item{x}{A vector of observations.}
 
-\item{phi}{Davidian curve parameters. length(phi) < 11.}
+\item{phi}{phi Davidian curve parameters.
+A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.}
 }
 \description{
 Provides the gradient for use in estimation.
+}
+\examples{
+# The loglikelihood of a univariate Davidian curve is given by,
+dc_LL <- function(phi, dat) {
+  sum(log(ddc(dat, phi)))
+}
+
+# dc_grad can be used for obtaining the gradient of this loglikelihood as follows:
+dc_LL_GR <- function(phi, dat) {
+  colSums(dc_grad(dat, phi))
+}
+
+# This can be verified by numerical approximation.
+# For instance, using numDeriv package:
+\dontrun{
+phi <- c(-10, 0, 10)
+d <- runif(10, -5, 5)
+dc_LL_GR(phi, d)
+numDeriv::grad(dc_LL, x = phi, dat = d)
+}
+
 }
