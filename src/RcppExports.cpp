@@ -7,26 +7,30 @@
 using namespace Rcpp;
 
 // ddc
-NumericVector ddc(NumericVector x, NumericVector phi);
-RcppExport SEXP _dcurver_ddc(SEXP xSEXP, SEXP phiSEXP) {
+NumericVector ddc(NumericVector x, double mean, double sd, NumericVector phi);
+RcppExport SEXP _dcurver_ddc(SEXP xSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(ddc(x, phi));
+    rcpp_result_gen = Rcpp::wrap(ddc(x, mean, sd, phi));
     return rcpp_result_gen;
 END_RCPP
 }
 // rdc
-NumericVector rdc(int n, NumericVector phi);
-RcppExport SEXP _dcurver_rdc(SEXP nSEXP, SEXP phiSEXP) {
+NumericVector rdc(int n, double mean, double sd, NumericVector phi);
+RcppExport SEXP _dcurver_rdc(SEXP nSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP phiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type phi(phiSEXP);
-    rcpp_result_gen = Rcpp::wrap(rdc(n, phi));
+    rcpp_result_gen = Rcpp::wrap(rdc(n, mean, sd, phi));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -44,8 +48,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_dcurver_ddc", (DL_FUNC) &_dcurver_ddc, 2},
-    {"_dcurver_rdc", (DL_FUNC) &_dcurver_rdc, 2},
+    {"_dcurver_ddc", (DL_FUNC) &_dcurver_ddc, 4},
+    {"_dcurver_rdc", (DL_FUNC) &_dcurver_rdc, 4},
     {"_dcurver_dc_grad", (DL_FUNC) &_dcurver_dc_grad, 2},
     {NULL, NULL, 0}
 };

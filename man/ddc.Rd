@@ -4,10 +4,14 @@
 \alias{ddc}
 \title{Density function for univariate Davidian curves}
 \usage{
-ddc(x, phi)
+ddc(x, mean, sd, phi)
 }
 \arguments{
 \item{x}{vector of quantiles.}
+
+\item{mean}{Mean of base density.}
+
+\item{sd}{Standard deviation of base density.}
 
 \item{phi}{Davidian curve parameters.
 A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.}
@@ -16,9 +20,9 @@ A maximum of 10 parameters is allowed, all of which should be between -90 < phi 
 Returns the density for a vector of x.
 }
 \examples{
-curve(ddc(x, 1.570789), -6, 6) # Approximately normal.
+curve(ddc(x, 0, 1, 1.570789), -6, 6) # Approximately normal.
 
 phi <- c(77.32, 78.51, 76.33, 77.16)
-curve(ddc(x, phi), -6, 6) # A bimodal density.
+curve(ddc(x, 0, 1, phi), -6, 6) # A bimodal density.
 integrate(ddc, phi = phi, lower = -Inf, upper = Inf) # Integrates to 1.
 }

@@ -5,7 +5,7 @@
 
 using namespace Rcpp;
 
-double ddc_ (double x, NumericVector phi) {
+double ddc_ (double x, double mean, double sd, NumericVector phi) {
   int k = phi.length();
   arma::mat invB(k+1, k+1);
   arma::mat c(k+1, 1);
@@ -20,7 +20,7 @@ double ddc_ (double x, NumericVector phi) {
   c = cMat(k, phi);
   
   res = arma::pow((invB * c).t() * expVec(x, k), 2);
-  normdens = dnorm(NumericVector::create(x), 0, 1, true)[0];
+  normdens = dnorm(NumericVector::create(x), mean, sd, true)[0];
   
   return exp(log(res[0]) + normdens);
 }
@@ -30,17 +30,19 @@ double ddc_ (double x, NumericVector phi) {
 //' Returns the density for a vector of x.
 //'
 //' @param x vector of quantiles.
+//' @param mean Mean of base density.
+//' @param sd Standard deviation of base density.
 //' @param phi Davidian curve parameters.
 //' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
 //' 
 //' @examples
-//' curve(ddc(x, 1.570789), -6, 6) # Approximately normal.
+//' curve(ddc(x, 0, 1, 1.570789), -6, 6) # Approximately normal.
 //' 
 //' phi <- c(77.32, 78.51, 76.33, 77.16)
-//' curve(ddc(x, phi), -6, 6) # A bimodal density.
+//' curve(ddc(x, 0, 1, phi), -6, 6) # A bimodal density.
 //' integrate(ddc, phi = phi, lower = -Inf, upper = Inf) # Integrates to 1.
 // [[Rcpp::export]]
-NumericVector ddc (NumericVector x, NumericVector phi) {
+NumericVector ddc (NumericVector x, double mean, double sd, NumericVector phi) {
   
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
@@ -56,7 +58,7 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
     if (Rcpp::traits::is_infinite<REALSXP>(x[i])) {
       res[i] = 0;
     } else {
-      res[i] = ddc_(x[i], phi); 
+      res[i] = ddc_(x[i], mean, sd, phi); 
     }
   }
 
@@ -68,22 +70,24 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
 //' Returns n samples from a univariate Davidian curve.
 //'
 //' @param n Number of observations to be sampled.
+//' @param mean Mean of base density.
+//' @param sd Standard deviation of base density.
 //' @param phi Davidian curve parameters.
 //' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
 //' 
 //' @examples
 //' # Sample from the standard normal Davidian curve:
-//' hist(rdc(1000, 1.570789), xlim = c(-6, 6), ylim = c(0, 0.5), freq = FALSE, breaks = 20)
+//' hist(rdc(1000, 0, 1, 1.570789), xlim = c(-6, 6), ylim = c(0, 0.5), freq = FALSE, breaks = 20)
 //' curve(dnorm(x), -6, 6, col = "blue", lwd = 1, add = TRUE)
 //' curve(ddc(x, 1.570789), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
 //'
 //' # Sample from a bimodal density:
 //' phi <- c(77.32, 78.51, 76.33, 77.16)
-//' hist(rdc(1000, phi), xlim = c(-6, 6), ylim = c(0, 0.4), freq = FALSE, breaks = "fd")
-//' curve(ddc(x, phi), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
+//' hist(rdc(1000, 0, 1, phi), xlim = c(-6, 6), ylim = c(0, 0.4), freq = FALSE, breaks = "fd")
+//' curve(ddc(x, 0, 1, phi), -6, 6, col = "red", lwd = 2, lty = 3, add = TRUE)
 //' 
 // [[Rcpp::export]]
-NumericVector rdc (int n, NumericVector phi) {
+NumericVector rdc (int n, double mean, double sd, NumericVector phi) {
   
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
@@ -106,7 +110,7 @@ NumericVector rdc (int n, NumericVector phi) {
     y = runif(1, -10.0, 10.0); // proposal density is runif, domain is defined as [-10, +10].
     u = runif(1);
     
-    ratio = ddc(y, phi) / (c * dunif(y, -10.0, +10.0)); //  ;
+    ratio = ddc(y, mean, sd, phi) / (c * dunif(y, -10.0, +10.0)); //  ;
     
     if (is_true(all(u < ratio))) {
       out[accepted] = y[0];

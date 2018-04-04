@@ -62,7 +62,7 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
 //' @examples
 //' # The loglikelihood of a univariate Davidian curve is given by,
 //' dc_LL <- function(phi, dat) {
-//'   sum(log(ddc(dat, phi)))
+//'   sum(log(ddc(dat, 0, 1, phi)))
 //' }
 //' 
 //' # dc_grad can be used for obtaining the gradient of this loglikelihood as follows:
