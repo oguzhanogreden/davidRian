@@ -78,37 +78,15 @@ arma::vec insZ (arma::vec vals) {
   return tmp;
 }
 
-arma::mat fillM (arma::vec vals) {
-  // Function to fill M given the vals.
+arma::mat create_M (int k) {
+  // Function to create M given the number of parameters.
   
-  int k = vals.n_elem;
-  arma::mat M(k, k, arma::fill::zeros);
+  // M is defined in Equation 9 in Woods & Lin (2009).
+  
+  arma::mat M(k+1, k+1, arma::fill::zeros);
   arma::rowvec valsZ;
-  
-  valsZ = insZ(vals).t();
-  
-  for (int i = 0; i < k; i++) {
-    M.row(i) = valsZ.head(k);
-    valsZ = arma::shift(valsZ, -1);
-  }
-  
-  return M;
-}
-
-arma::mat invBMat (int k) {
-  // Obtain B matrix and find the inverse.
-  
-  // Following the notation in Woods & Lin (2009):
-  // Inverse of B is a frequently used term. B itself is defined,
-  // B^T B = M.
-  // M is filled manually as it is given in Equation (9),
-  // fillM() is defined above for this purpose. Then, B is obtained
-  // by Cholesky decomposition and inversed.
-  arma::mat B(k+1, k+1);
-  arma::mat invB(k+1, k+1);
-  arma::mat M(k+1, k+1);
   arma::vec vals(k+1);
-  
+
   // M matrix values.
   if (k == 1) {
     vals = arma::vec({1, 1}); // E[X^0, X^2]
@@ -130,12 +108,30 @@ arma::mat invBMat (int k) {
     vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025, 34459425});
   } else if (k == 10) {
     vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025, 34459425, 654729075});
-  } 
+  }
   
+  valsZ = insZ(vals).t();
   
-  // Fill M
-  M = fillM(vals);
+  for (int i = 0; i < k+1; i++) {
+    M.row(i) = valsZ.head(k+1);
+    valsZ = arma::shift(valsZ, -1);
+  }
   
+  return M;
+}
+
+arma::mat invBMat (int k) {
+  // Obtain B matrix and find the inverse.
+  
+  // Following the notation in Woods & Lin (2009).
+  // Inverse of B is a frequently used term. B itself is defined,
+  // B^T B = M. M is given by create_M() defined above. Then, B is obtained
+  // by Cholesky decomposition and inversed.
+  arma::mat B(k+1, k+1);
+  arma::mat invB(k+1, k+1);
+  arma::mat M(k+1, k+1);
+  
+  M = create_M(k);
   B = arma::chol(M);
   invB = arma::inv(B);
   
