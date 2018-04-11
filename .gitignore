@@ -8,3 +8,4 @@
 **.so
 README.Rmd
 tests/localtests.R
+*.dll
