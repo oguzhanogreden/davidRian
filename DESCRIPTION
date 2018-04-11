@@ -1,6 +1,6 @@
 Package: dcurver
-Version: 0.9.0
-Date: 2018-03-29
+Version: 0.9.1
+Date: 2018-04-11
 Title: Utility Functions for Davidian Curves
 Author: Oğuzhan Öğreden
 Maintainer: Oğuzhan Öğreden <oguzhan@oguzhanogreden.com>
