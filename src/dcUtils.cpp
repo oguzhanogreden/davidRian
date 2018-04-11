@@ -109,13 +109,13 @@ arma::mat invBMat (int k) {
   arma::mat M(k+1, k+1);
   arma::vec vals(k+1);
   
-  // M matrix values, approximate.
+  // M matrix values.
   if (k == 1) {
-    vals = arma::vec({1, 1});
+    vals = arma::vec({1, 1}); // E[X^0, X^2]
   } else if (k == 2) {
-    vals = arma::vec({1, 1, 3});
+    vals = arma::vec({1, 1, 3}); // E[X^0], E[X^2], E[X^4]
   } else if (k == 3) {
-    vals = arma::vec({1, 1, 3, 15});
+    vals = arma::vec({1, 1, 3, 15}); // ... and so on.
   } else if (k == 4) {
     vals = arma::vec({1, 1, 3, 15, 105});
   } else if (k == 5) {
@@ -127,10 +127,11 @@ arma::mat invBMat (int k) {
   } else if (k == 8) {
     vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025});
   } else if (k == 9) {
-    vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025, 34420000});
+    vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025, 34459425});
   } else if (k == 10) {
-    vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025, 34420000, 656000000});
+    vals = arma::vec({1, 1, 3, 15, 105, 945, 10395, 135135, 2027025, 34459425, 654729075});
   } 
+  
   
   // Fill M
   M = fillM(vals);
