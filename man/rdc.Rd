@@ -10,7 +10,7 @@ rdc(n, phi)
 \item{n}{Number of observations to be sampled.}
 
 \item{phi}{Davidian curve parameters.
-A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.}
+A maximum of 10 parameters is allowed.}
 }
 \description{
 Returns n samples from a univariate Davidian curve.

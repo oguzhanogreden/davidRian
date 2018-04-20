@@ -31,7 +31,7 @@ double ddc_ (double x, NumericVector phi) {
 //'
 //' @param x vector of quantiles.
 //' @param phi Davidian curve parameters.
-//' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
+//' A maximum of 10 parameters is allowed.
 //' 
 //' @examples
 //' curve(ddc(x, 1.570789), -6, 6) # Approximately normal.
@@ -45,11 +45,7 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
   }
-  
-  if (is_true(any((phi <= -90) | (phi > 90)))) {
-    stop("90 < phi <= 90 should hold for all phi.");
-  }
-  
+
   NumericVector res(x.length());
 
   for (int i = 0; i < x.length(); i++) {
@@ -69,7 +65,7 @@ NumericVector ddc (NumericVector x, NumericVector phi) {
 //'
 //' @param n Number of observations to be sampled.
 //' @param phi Davidian curve parameters.
-//' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
+//' A maximum of 10 parameters is allowed.
 //' 
 //' @examples
 //' # Sample from the standard normal Davidian curve:
@@ -88,12 +84,7 @@ NumericVector rdc (int n, NumericVector phi) {
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
   }
-  
-  if (is_true(any((phi <= -90) | (phi > 90)))) {
-    stop("90 < phi <= 90 should hold for all phi.");
-  }
-  
-  
+
   NumericVector out(n);
   NumericVector c(1, 8.55); // this may not be optimal but some local tests held up.
   int accepted = 0;

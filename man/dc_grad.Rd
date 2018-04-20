@@ -10,15 +10,13 @@ dc_grad(x, phi)
 \item{x}{A vector of observations.}
 
 \item{phi}{phi Davidian curve parameters.
-A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.}
+A maximum of 10 parameters is allowed.}
 }
 \description{
 Provides the gradient for use in estimation.
 }
 \details{
-Woods & Lin (2009) provide the gradient (Equations 17 and 18). Although the parameterization is
-defined for -90 < phi < 90, there are elements which are not defined when phi = 0.0. A warning is
-raised for this.
+Woods & Lin (2009) provide the gradient (Equations 17 and 18). Note that the gradient is not defined for phi = 0.0.
 }
 \examples{
 # The loglikelihood of a univariate Davidian curve is given by,
@@ -38,6 +36,9 @@ phi <- c(-5, 2.5, 10)
 d <- runif(10, -5, 5)
 dc_LL_GR(phi, d)
 numDeriv::grad(dc_LL, x = phi, dat = d)
+
+phi <- c(-5, 0, 10)
+dc_LL_GR(phi, d)
 }
 
 }

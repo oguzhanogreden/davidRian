@@ -28,11 +28,7 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
       } else if (j > i) {
         cDer(i,j) = -1 * c[j] * tp;
       } else if (j == i) {
-        if (tp == 0) {
-          cDer(i,j) = 0; // it is not clear how to go about this in Eq (18), hence 0.
-        } else {
-          cDer(i,j) = c[j] * (1/tp);
-        }
+        cDer(i,j) = c[j] * (1/tp);
       } else if (j < i) {
         cDer(i,j) = 0;
       }
@@ -57,11 +53,9 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
 //'
 //' @param x A vector of observations.
 //' @param phi phi Davidian curve parameters.
-//' A maximum of 10 parameters is allowed, all of which should be between -90 < phi <= 90.
+//' A maximum of 10 parameters is allowed.
 //' 
-//' @details Woods & Lin (2009) provide the gradient (Equations 17 and 18). Although the parameterization is
-//' defined for -90 < phi < 90, there are elements which are not defined when phi = 0.0. A warning is
-//' raised for this.
+//' @details Woods & Lin (2009) provide the gradient (Equations 17 and 18). Note that the gradient is not defined for phi = 0.0.
 //' 
 //' @references Woods, C. M., & Lin, N. (2009). Item response theory with estimation of the latent density using Davidian curves.
 //' \emph{Applied Psychological Measurement, 33}(2), 102-117. \doi{10.1177/0146621608319512}
@@ -84,6 +78,9 @@ NumericVector dcGrad_ (double x, NumericVector phi) {
 //' d <- runif(10, -5, 5)
 //' dc_LL_GR(phi, d)
 //' numDeriv::grad(dc_LL, x = phi, dat = d)
+//' 
+//' phi <- c(-5, 0, 10)
+//' dc_LL_GR(phi, d)
 //' }
 //' 
 // [[Rcpp::export]]
@@ -93,14 +90,6 @@ NumericVector dc_grad (NumericVector x,  NumericVector phi) {
   
   if (phi.length() > 10) {
     stop("length(phi) > 10 is not supported.");
-  }
-  
-  if (is_true(any((phi <= -90) | (phi > 90)))) {
-    stop("90 < phi <= 90 should hold for all phi.");
-  }
-  
-  if(is_true(any(phi == 0))) {
-    warning("Ensure that not all phi's are 0 when dc_grad() is called.");
   }
   
   for (int i = 0; i < x.length(); i++) {
